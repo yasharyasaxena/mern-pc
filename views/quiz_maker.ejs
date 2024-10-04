@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quiz Maker</title>
+  </head>
+  <body>
+    <h1>Make your own Quiz</h1>
+    <br />
+    <% if (db.findOne({author: email})) { %> <% for( let i = 0; i <
+    questions.length; i++ ) { %>
+    <p>Q<%= i+1 %>: <%= questions[i].text %></p>
+    <b></b>
+    <p>a. <%= questions[i].a %></p>
+    <b></b>
+    <p>b. <%= questions[i].b %></p>
+    <b></b>
+    <p>c. <%= questions[i].c %></p>
+    <b></b>
+    <p>d. <%= questions[i].d %></p>
+    <b></b>
+    <% } %> <% } %>
+    <form action="/quiz_maker" method="post">
+      <label for="question">Q</label>
+      <input id="question" name="question" type="text" />
+      <input name="a" type="text" placeholder="Option A" />
+      <input name="b" type="text" placeholder="Option B" />
+      <input name="c" type="text" placeholder="Option C" />
+      <input name="d" type="text" placeholder="Option D" />
+      <input name="correctOption" type="text" placeholder="a/b/c/d" />
+      <button type="submit">Submit</button><br /><br />
+      <button name="save" value="true">Save</button>
+    </form>
+  </body>
+</html>
