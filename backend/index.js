@@ -126,11 +126,12 @@ app
         return res.render('quiz_maker', {
             email: req.session.user,
             db: Quizes,
-            questions: Object.values(await Quizes.find({author:req.session.user}))[0].questions,
+            questions: await Quizes.findOne({author:req.session.user}) ? Object.values(await Quizes.find({author:req.session.user}))[0].questions : null,
         });
     })
     .post(async (req, res) => {
-        var question = Object.values(await Quizes.find({author:req.session.user}))[0].questions
+        console.log()
+        let question = await Quizes.findOne({author:req.session.user}) ? Object.values(await Quizes.find({author:req.session.user}))[0].questions : []
         question.push(...[{  
             text: req.body.question,
             a: req.body.a,
@@ -139,9 +140,18 @@ app
             d: req.body.d,
             correctOption: req.body.correctOption
         }])
-        await Quizes.findByIdAndUpdate(Object.values(await Quizes.find({author:req.session.user}))[0]._id, {
-            questions: question
-        })
+        if(!await Quizes.findOne({author:req.session.user})){
+            await Quizes.create({
+                author: req.session.user,
+                quizTitle: req.body.quizTitle,
+                questions: question
+            })
+        }
+        else{
+            await Quizes.findByIdAndUpdate(Object.values(await Quizes.find({author:req.session.user}))[0]._id, {
+                questions: question
+            })
+        }
         if(req.body.save){
             return res.redirect('/quiz_taker')
         }

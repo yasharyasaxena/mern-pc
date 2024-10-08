@@ -8,7 +8,11 @@
   <body>
     <h1>Make your own Quiz</h1>
     <br />
-    <% if (db.findOne({author: email})) { %> <% for( let i = 0; i <
+    <form action="/quiz_maker" method="post">
+      <label for="quizTitle">Quiz Title</label>
+      <input id="quizTitle" name="quizTitle" type="text" />
+    </form>
+    <% if (db.findOne({author: email}) && questions) { %> <% for( let i = 0; i <
     questions.length; i++ ) { %>
     <p>Q<%= i+1 %>: <%= questions[i].text %></p>
     <b></b>

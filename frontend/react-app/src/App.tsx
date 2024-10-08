@@ -1,7 +1,11 @@
-import ListGroup from "./components/ListGroup";
+import Home from "./components/Home";
 
-function App(){
-  return <div><ListGroup /></div>;
+function App() {
+  return (
+    <div>
+      <Home></Home>
+    </div>
+  );
 }
 
 export default App;
